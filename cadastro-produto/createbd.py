@@ -22,7 +22,7 @@ try:
         quantidade INTEGER DEFAULT 0,
         categoria_id INTEGER,
         fornecedor_id INTEGER,
-        FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+        FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL, 
         FOREIGN KEY (fornecedor_id) REFERENCES fornecedores(id)   
         )""")
         print('Tabela moveis criada com sucesso!')
@@ -68,7 +68,7 @@ try:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         movel_id INTEGER NOT NULL,
         tipo TEXT CHECK(tipo IN ('entrada', 'saida')) NOT NULL,
-        quantidade INTEGER NOT NULL,
+        quantidade INTEGER NOT NULL CHECK(quantidade > 0),
         data TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         observacao TEXT,
         FOREIGN KEY (movel_id) REFERENCES moveis(id)
