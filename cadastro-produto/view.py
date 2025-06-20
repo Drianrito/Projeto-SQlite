@@ -8,41 +8,64 @@ except sqlite3.Error as e:
 
 # Tabela de Moveis ----------------------------
 
-# Criar Moveis
-def criarMovel(lista):
-    with con:
-        cur = con.cursor()
-        query = "INSERT INTO moveis (nome, descricao, preco, quantidade, categoria_id, fornecedor_id) VALUES(?,?,?,?,?,?)"
-        cur.execute(query,lista)
+def criarMovel(dados):
+    """
+    Insere um novo móvel no banco.
+    dados: lista [nome, descricao, preco, quantidade, categoria_id, fornecedor_id]
+    """
+    query = """
+    INSERT INTO moveis (nome, descricao, preco, quantidade, categoria_id, fornecedor_id)
+    VALUES (?, ?, ?, ?, ?, ?)
+    """
+    try:
+        with con:
+            con.execute(query, dados)
+    except sqlite3.Error as e:
+        print("Erro ao inserir móvel:", e)
 
-##criarMovel(['Cadeira','Cadeira estofada preta',88.0,89,87,66])
-
-# Ver Moveis
 def verMoveis():
-    lista = []
-    with con:
-        cur = con.cursor()
-        cur.execute('SELECT * FROM moveis')
-        linha = cur.fetchall()
-        for i in linha:
-            lista.append(i)
-    return lista
+    """
+    Retorna uma lista com todos os móveis.
+    """
+    try:
+        with con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM moveis")
+            return cur.fetchall()
+    except sqlite3.Error as e:
+        print("Erro ao buscar móveis:", e)
+        return []
 
+def atualizarMovel(dados):
+    """
+    Atualiza os dados de um móvel existente.
+    dados: lista [nome, descricao, preco, quantidade, categoria_id, fornecedor_id, id]
+    """
+    query = """
+    UPDATE moveis
+    SET nome = ?, descricao = ?, preco = ?, quantidade = ?, categoria_id = ?, fornecedor_id = ?
+    WHERE id = ?
+    """
+    try:
+        with con:
+            con.execute(query, dados)
+    except sqlite3.Error as e:
+        print("Erro ao atualizar móvel:", e)
+
+def deletarMovel(movel_id):
+    """
+    Deleta um móvel pelo id.
+    movel_id: inteiro
+    """
+    query = "DELETE FROM moveis WHERE id = ?"
+    try:
+        with con:
+            con.execute(query, (movel_id,))
+    except sqlite3.Error as e:
+        print("Erro ao deletar móvel:", e)
+
+
+criarMovel(['Cadeira', 'Cadeira estofada preta', 88.0, 89, 1, 1])
+atualizarMovel(['Cadeira reformada', 'Nova cor azul', 90.0, 80, 1, 1, 1])
+deletarMovel(3)
 print(verMoveis())
-
-# Atualizar moveis
-def atualizarMoveis(i):
-    with con:
-        cur = con.cursor()
-        query = 'UPDATE moveis SET nome=?, descricao=?, preco=?, quantidade=?, categoria_id=?, fornecedor_id=? WHERE id=?'
-        cur.execute(query,i)
-
-l = ['Cadeira formosa', 'Cadeira estofada branca', 88.0, 89, 87, 66, 5]
-atualizarMoveis(l)
-
-# Deletar moveis
-def deletarMoveis(i):
-    with con:
-        cur = con.cursor()
-        query = 'DELETE FROM moveis WHERE id=?'
-        cur.execute(query,i)
