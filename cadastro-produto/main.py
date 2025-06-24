@@ -51,5 +51,47 @@ logo = ImageTk.PhotoImage(logo)
 app_logo = Label(frame_logo,image=logo, text='Cadastro de Moveis',width=850, compound=LEFT, relief=RAISED,anchor=NW, font=('Ivy 15 bold'),bg=co6,fg=co1)
 app_logo.place(x=0,y=0)
 
+# Botoes
+
+#Botao cadastro
+img_cadastro = Image.open('./imgs/cadastro.png')
+img_cadastro = img_cadastro.resize((20,20))
+img_cadastro = ImageTk.PhotoImage(img_cadastro)
+app_cadastro = Label(frame_dados,image=img_cadastro, text=' Cadastro',width=100, compound=LEFT, relief="flat", font=('Ivy 11'),bg=co1,fg=co0)
+def on_enter(event):
+    app_cadastro.config(relief=RIDGE)
+def on_leave(event):
+    app_cadastro.config(relief='flat')
+app_cadastro.bind("<Enter>", on_enter)
+app_cadastro.bind("<Leave>", on_leave)
+app_cadastro.place(x=10,y=30)
+
+#Botao Adicionar
+
+img_adicionar = Image.open('./imgs/adicionar.png')
+img_adicionar = img_adicionar.resize((20,20))
+img_adicionar = ImageTk.PhotoImage(img_adicionar)
+app_adicionar = Label(frame_dados,image=img_adicionar, text=' Adicionar',width=100, compound=LEFT, relief="flat", font=('Ivy 11'),bg=co1,fg=co0)
+def on_enter(event):
+    app_adicionar.config(relief=RIDGE)
+def on_leave(event):
+    app_adicionar.config(relief='flat')
+app_adicionar.bind("<Enter>", on_enter)
+app_adicionar.bind("<Leave>", on_leave)
+app_adicionar.place(x=123,y=30)
+
+#Botao Salvar
+img_salvar = Image.open('./imgs/salvar.png')
+img_salvar = img_salvar.resize((20,20))
+img_salvar = ImageTk.PhotoImage(img_salvar)
+app_salvar = Label(frame_dados,image=img_salvar, text=' Salvar',width=100, compound=LEFT, relief="flat", font=('Ivy 11'),bg=co1,fg=co0)
+def on_enter(event):
+    app_salvar.config(relief=RIDGE)
+def on_leave(event):
+    app_salvar.config(relief='flat')
+app_salvar.bind("<Enter>", on_enter)
+app_salvar.bind("<Leave>", on_leave)
+app_salvar.place(x=236,y=30)
+
 
 janela.mainloop()
